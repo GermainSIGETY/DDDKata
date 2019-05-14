@@ -5,9 +5,9 @@
 A simple Rest API for a Todo list management, developped with Spring Boot and DDD concepts
 
 
-## Full presentation
+## Article
 
-Please read this article : XXXXXXX
+Please read https://medium.com/@gsigety/domain-driven-design-spring-boot-kata-1-8a85034babec
 
 ## Architecture
 
