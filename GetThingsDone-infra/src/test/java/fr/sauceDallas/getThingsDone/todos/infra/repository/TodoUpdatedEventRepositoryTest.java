@@ -2,7 +2,6 @@ package fr.sauceDallas.getThingsDone.todos.infra.repository;
 
 import fr.sauceDallas.getThingsDone.common.events.TodoUpdatedEvent;
 import fr.sauceDallas.getThingsDone.common.infrastructure.TodosUpdatedEventRepository;
-import fr.sauceDallas.getThingsDone.todos.infra.InfraConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {InfraConfiguration.class})
+@ContextConfiguration(classes = {RepositoriesConfiguration.class})
 @ActiveProfiles({"test"})
 @DataJpaTest
 public class TodoUpdatedEventRepositoryTest {
@@ -42,6 +42,8 @@ public class TodoUpdatedEventRepositoryTest {
         assertThat(event.get().getTitle()).isEqualTo(TITLE);
         assertThat(event.get().getAssignee()).isEqualTo(ASSIGNEE);
         assertThat(event.get().getOccurredAt()).isEqualTo(OCCURRED_AT);
+        assertThat(event.get().getProcessed()).isTrue();
+
     }
 
     @Test
@@ -66,5 +68,27 @@ public class TodoUpdatedEventRepositoryTest {
         assertThat(read.get().getTitle()).isEqualTo(TITLE1);
         assertThat(read.get().getAssignee()).isEqualTo(ASSIGNEE1);
         assertThat(read.get().getOccurredAt()).isNotNull();
+    }
+
+    @Test
+    public void testUpdate() {
+
+        TodoUpdatedEvent event = new TodoUpdatedEvent(TITLE1, ASSIGNEE1);
+        assertThat(event.getProcessed()).isFalse();
+        Long createdId = repository.create(event);
+
+        TodoUpdatedEvent readEvent = repository.readEvent(createdId).get();
+        readEvent.markAsProcessed();
+        repository.update(readEvent);
+
+        Optional<TodoUpdatedEvent> read = repository.readEvent(createdId);
+        assertThat(read.get().getProcessed()).isTrue();
+    }
+
+    @Test
+    public void testGetEventsIdsToProcess () {
+        List<Long> eventsIdsToProcess = repository.getEventsIdsToProcess();
+        assertThat(eventsIdsToProcess.size()).isEqualTo(1);
+        assertThat(eventsIdsToProcess.get(0)).isEqualTo(2);
     }
 }

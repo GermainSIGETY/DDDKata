@@ -12,17 +12,25 @@ public class TodoUpdatedEvent {
 
     private LocalDateTime occurredAt;
 
+    private Boolean processed;
+
     public TodoUpdatedEvent(String title, String assignee) {
         this.title = title;
         this.assignee = assignee;
         this.occurredAt = LocalDateTime.now();
+        this.processed = false;
     }
 
-    public TodoUpdatedEvent(Long id, String title, String assignee, LocalDateTime occurredAt) {
+    public TodoUpdatedEvent(Long id, String title, String assignee, LocalDateTime occurredAt, Boolean processed) {
         this.id= id;
         this.title = title;
         this.assignee = assignee;
         this.occurredAt = occurredAt;
+        this.processed = processed;
+    }
+
+    public void markAsProcessed() {
+        this.processed = true;
     }
 
     public Long getId() {
@@ -39,5 +47,9 @@ public class TodoUpdatedEvent {
 
     public LocalDateTime getOccurredAt() {
         return occurredAt;
+    }
+
+    public Boolean getProcessed() {
+        return processed;
     }
 }

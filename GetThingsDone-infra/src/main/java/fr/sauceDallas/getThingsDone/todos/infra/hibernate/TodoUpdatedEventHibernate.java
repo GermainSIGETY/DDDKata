@@ -36,6 +36,9 @@ public class TodoUpdatedEventHibernate {
     @Column(name = "OCCURRED_AT")
     public LocalDateTime occurredAt;
 
+    @Column(name = "PROCESSED")
+    public Boolean processed;
+    
     public TodoUpdatedEventHibernate() {
     }
 }

@@ -1,7 +1,6 @@
 package fr.sauceDallas.getThingsDone.todos.infra.repository;
 
 import fr.sauceDallas.getThingsDone.todos.domain.Todo;
-import fr.sauceDallas.getThingsDone.todos.infra.InfraConfiguration;
 import fr.sauceDallas.getThingsDone.todos.infrastructure.TodosRepository;
 import fr.sauceDallas.getThingsDone.todos.presentation.TodoSummary;
 import fr.sauceDallas.getThingsDone.todos.presentation.TodoUpdateRequest;
@@ -22,7 +21,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {InfraConfiguration.class})
+@ContextConfiguration(classes = {RepositoriesConfiguration.class})
 @ActiveProfiles({"test"})
 @DataJpaTest
 public class TodosRepositoryTest {

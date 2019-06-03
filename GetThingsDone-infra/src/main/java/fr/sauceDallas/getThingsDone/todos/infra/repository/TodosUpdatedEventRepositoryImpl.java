@@ -5,6 +5,7 @@ import fr.sauceDallas.getThingsDone.common.infrastructure.TodosUpdatedEventRepos
 import fr.sauceDallas.getThingsDone.todos.infra.hibernate.TodoUpdatedEventHibernate;
 import fr.sauceDallas.getThingsDone.todos.infra.hibernate.TodoUpdatedEventHibernateRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class TodosUpdatedEventRepositoryImpl implements TodosUpdatedEventRepository {
@@ -28,4 +29,19 @@ public class TodosUpdatedEventRepositoryImpl implements TodosUpdatedEventReposit
         return saved.id;
     }
 
+    @Override
+    public void update(TodoUpdatedEvent event) {
+        Optional<TodoUpdatedEventHibernate> opt = repository.findById(event.getId());
+        opt.map(th -> {
+            TodoUpdatedEventHibernateMapper.mapHibernateFields(event, th);
+            return th;
+        }).orElseThrow(() -> new IllegalArgumentException());
+        //... and let hibernate dirty checking do the magic :)
+        //of course you have to be in a transaction
+    }
+
+    @Override
+    public List<Long> getEventsIdsToProcess() {
+        return this.repository.getEventsIdsToProcess();
+    }
 }

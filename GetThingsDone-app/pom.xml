@@ -19,6 +19,11 @@
             <artifactId>GetThingsDone-infra</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>fr.sauceDallas</groupId>
+            <artifactId>GetThingsDone-alerts-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

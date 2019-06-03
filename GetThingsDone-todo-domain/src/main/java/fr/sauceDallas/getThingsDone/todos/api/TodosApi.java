@@ -4,6 +4,7 @@ import fr.sauceDallas.getThingsDone.common.events.TodoUpdatedEvent;
 import fr.sauceDallas.getThingsDone.common.infrastructure.TodosUpdatedEventRepository;
 import fr.sauceDallas.getThingsDone.todos.domain.Todo;
 import fr.sauceDallas.getThingsDone.todos.domain.validators.ValidationError;
+import fr.sauceDallas.getThingsDone.todos.infrastructure.EventNotifier;
 import fr.sauceDallas.getThingsDone.todos.infrastructure.TodosRepository;
 import fr.sauceDallas.getThingsDone.todos.presentation.*;
 
@@ -17,9 +18,12 @@ public class TodosApi {
 
     private TodosUpdatedEventRepository todosUpdatedEventRepository;
 
-    public TodosApi(TodosRepository todosRepository, TodosUpdatedEventRepository todosUpdatedEventRepository) {
+    private EventNotifier eventNotifier;
+
+    public TodosApi(TodosRepository todosRepository, TodosUpdatedEventRepository todosUpdatedEventRepository, EventNotifier eventNotifier) {
         this.todosRepository = todosRepository;
         this.todosUpdatedEventRepository = todosUpdatedEventRepository;
+        this.eventNotifier = eventNotifier;
     }
 
     @Transactional
@@ -31,6 +35,7 @@ public class TodosApi {
     public Long createTodo(TodoCreationRequest request) {
         Todo todo = new Todo(request.title, request.description, request.assignee, request.dueDateTimeStamp);
         this.todosUpdatedEventRepository.create(new TodoUpdatedEvent(request.title,request.assignee));
+        this.storeAndNotifyEvent(new TodoUpdatedEvent(todo.getTitle(), todo.getAssignee()));
         return this.todosRepository.create(todo);
     }
 
@@ -49,7 +54,7 @@ public class TodosApi {
                         singletonList(new TodoError(ValidationError.INVALID_TODO_NUMBER.code, "id", ValidationError.INVALID_TODO_NUMBER.message))));
 
         this.todosRepository.update(todoOpt.get());
-        this.todosUpdatedEventRepository.create(todoUpdatedEvent);
+        this.storeAndNotifyEvent(todoUpdatedEvent);
     }
 
     public void deleteTodo(Long id) throws TodoDomainException {
@@ -60,5 +65,10 @@ public class TodosApi {
         }).orElseThrow(() ->
                 new TodoDomainException(Collections.
                         singletonList(new TodoError(ValidationError.INVALID_TODO_NUMBER.code, "id", ValidationError.INVALID_TODO_NUMBER.message))));
+    }
+
+    private void storeAndNotifyEvent(TodoUpdatedEvent event) {
+        Long eventId = this.todosUpdatedEventRepository.create(event);
+        eventNotifier.notifyTodoUpdated(eventId);
     }
 }

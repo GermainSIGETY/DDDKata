@@ -17,7 +17,6 @@ public class TodoUpdatedEventHibernateMapperTest {
     private static final LocalDateTime OCCURRED_AT = LocalDateTime.of(2015, Month.NOVEMBER,
             6,00,00,00);
 
-
     @Test
     public void fromTodoUpdatedEventHibernateTest() {
         TodoUpdatedEventHibernate eventHibernate = new TodoUpdatedEventHibernate();
@@ -25,17 +24,19 @@ public class TodoUpdatedEventHibernateMapperTest {
         eventHibernate.title = TITLE;
         eventHibernate.assignee= ASSIGNEE;
         eventHibernate.occurredAt = OCCURRED_AT;
+        eventHibernate.processed = true;
         TodoUpdatedEvent updatedEvent = TodoUpdatedEventHibernateMapper.fromEventHibernate(eventHibernate);
 
         assertThat(updatedEvent.getId()).isEqualTo(ID);
         assertThat(updatedEvent.getTitle()).isEqualTo(TITLE);
         assertThat(updatedEvent.getAssignee()).isEqualTo(ASSIGNEE);
         assertThat(updatedEvent.getOccurredAt()).isEqualTo(OCCURRED_AT);
+        assertThat(updatedEvent.getProcessed()).isTrue();
     }
 
     @Test
     public void fromTodo() {
-        TodoUpdatedEvent event = new TodoUpdatedEvent(ID, TITLE, ASSIGNEE, OCCURRED_AT);
+        TodoUpdatedEvent event = new TodoUpdatedEvent(ID, TITLE, ASSIGNEE, OCCURRED_AT, true);
 
         TodoUpdatedEventHibernate eventHibernate = TodoUpdatedEventHibernateMapper.fromTodoUpdatedEvent(event);
 
@@ -43,5 +44,6 @@ public class TodoUpdatedEventHibernateMapperTest {
         assertThat(eventHibernate.title).isEqualTo(TITLE);
         assertThat(eventHibernate.assignee).isEqualTo(ASSIGNEE);
         assertThat(eventHibernate.occurredAt).isEqualTo(OCCURRED_AT);
+        assertThat(eventHibernate.processed).isTrue();
     }
 }

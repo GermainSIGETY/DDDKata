@@ -1,8 +1,11 @@
 package fr.sauceDallas.getThingsDone.app.ui;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import fr.sauceDallas.getThingsDone.todos.infra.hibernate.TodoUpdatedEventHibernate;
+import fr.sauceDallas.getThingsDone.todos.infra.hibernate.TodoUpdatedEventHibernateRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +13,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,9 +31,12 @@ public class TodoITsSteps {
 
     private TodoWorld todoWorld;
 
-    public TodoITsSteps(TestRestTemplate restTemplate, TodoWorld todoWorld) {
+    private TodoUpdatedEventHibernateRepository repository;
+
+    public TodoITsSteps(TestRestTemplate restTemplate, TodoWorld todoWorld, TodoUpdatedEventHibernateRepository repository) {
         this.restTemplate = restTemplate;
         this.todoWorld = todoWorld;
+        this.repository = repository;
     }
 
     @Given("^a Todo with title \"([^\"]*)\" and description \"([^\"]*)\"$")
@@ -37,7 +45,7 @@ public class TodoITsSteps {
         JSONObject request = new JSONObject();
         request.put("title", title);
         request.put("description", description);
-        request.put("assignee",ASSIGNEE);
+        request.put("assignee", ASSIGNEE);
         request.put("dueDate", 12334);
 
         HttpHeaders headers = new HttpHeaders();
@@ -84,7 +92,7 @@ public class TodoITsSteps {
         JSONObject request = new JSONObject();
         request.put("title", title);
         request.put("description", description);
-        request.put("assignee",ASSIGNEE);
+        request.put("assignee", ASSIGNEE);
         request.put("dueDate", 12334);
 
         HttpHeaders headers = new HttpHeaders();
@@ -96,5 +104,16 @@ public class TodoITsSteps {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT
         );
+    }
+
+    @And("^An alert has been sent to user with title \"([^\"]*)\"$")
+    public void anAlertHasBeenSentToUserWithTitle(String alertTitle) throws InterruptedException {
+        //eventually consistency buddy
+        Thread.sleep(1000);
+
+        Optional<TodoUpdatedEventHibernate> opt = repository.findByTitle(alertTitle);
+        assertThat(opt.isPresent()).isTrue();
+        assertThat(opt.get().processed).isTrue();
+
     }
 }

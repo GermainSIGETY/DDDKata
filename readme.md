@@ -76,7 +76,8 @@ curl -X POST \
   -d '{
    "title":"plant a tree",
    "description" : "because green is pleasing",
-   "dueDate": 1557847007
+   "dueDate": 1557847007,
+   "assignee" : "youryouryouremail@gmail.com"
 }'
 ```
 

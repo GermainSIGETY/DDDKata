@@ -8,7 +8,8 @@ public class TodoUpdatedEventHibernateMapper {
     public static TodoUpdatedEvent fromEventHibernate(TodoUpdatedEventHibernate eventHibernate) {
         return new TodoUpdatedEvent(eventHibernate.id, eventHibernate.title,
                 eventHibernate.assignee,
-                eventHibernate.occurredAt);
+                eventHibernate.occurredAt,
+                eventHibernate.processed);
     }
 
     public static TodoUpdatedEventHibernate fromTodoUpdatedEvent(TodoUpdatedEvent event) {
@@ -22,5 +23,6 @@ public class TodoUpdatedEventHibernateMapper {
         eventHibernate.title = event.getTitle();
         eventHibernate.assignee = event.getAssignee();
         eventHibernate.occurredAt = event.getOccurredAt();
+        eventHibernate.processed = event.getProcessed();
     }
 }
