@@ -8,5 +8,5 @@ import org.junit.runner.RunWith;
 @CucumberOptions(features = "classpath:fr/sauceDallas/getThingsDone/app/ui",
         plugin = "pretty",
         glue = "fr.sauceDallas.getThingsDone.app.ui")
-public class TodoITs {
+public class TodoIT {
 }
