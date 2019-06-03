@@ -1,7 +1,9 @@
 package fr.sauceDallas.getThingsDone.todos.infra;
 
+import fr.sauceDallas.getThingsDone.todos.infra.hibernate.TodoUpdatedEventHibernateRepository;
 import fr.sauceDallas.getThingsDone.todos.infra.hibernate.TodosHibernateRepository;
 import fr.sauceDallas.getThingsDone.todos.infra.repository.TodosRepositoryImpl;
+import fr.sauceDallas.getThingsDone.todos.infra.repository.TodosUpdatedEventRepositoryImpl;
 import fr.sauceDallas.getThingsDone.todos.infrastructure.TodosRepository;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -16,5 +18,10 @@ public class InfraConfiguration {
     @Bean
     TodosRepository todosRepository(TodosHibernateRepository todosHibernateRepository) {
         return new TodosRepositoryImpl(todosHibernateRepository);
+    }
+
+    @Bean
+    TodosUpdatedEventRepositoryImpl todoUpdatedEventRepository(TodoUpdatedEventHibernateRepository repository) {
+        return new TodosUpdatedEventRepositoryImpl(repository);
     }
 }

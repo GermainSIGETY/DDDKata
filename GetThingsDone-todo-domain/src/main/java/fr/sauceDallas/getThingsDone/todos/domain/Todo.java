@@ -1,5 +1,6 @@
 package fr.sauceDallas.getThingsDone.todos.domain;
 
+import fr.sauceDallas.getThingsDone.todos.domain.events.TodoUpdatedEvent;
 import fr.sauceDallas.getThingsDone.todos.presentation.ReadTodoResponse;
 import fr.sauceDallas.getThingsDone.todos.presentation.TodoUpdateRequest;
 
@@ -66,12 +67,12 @@ public class Todo {
         return new ReadTodoResponse(title, description, creationDatTime, dueDateTime);
     }
 
-    public Todo updateFromUpdateRequest(TodoUpdateRequest request) {
+    public TodoUpdatedEvent updateFromUpdateRequest(TodoUpdateRequest request) {
         this.title = request.title;
         this.description = request.description;
         this.assignee = request.assignee;
         this.dueDateTime = timeStampToLocalDate(request.dueDateTimeStamp);
-        return this;
+        return new TodoUpdatedEvent(request.title, request.assignee);
     }
 
     private LocalDateTime timeStampToLocalDate(Long dueDateTimeStamp) {

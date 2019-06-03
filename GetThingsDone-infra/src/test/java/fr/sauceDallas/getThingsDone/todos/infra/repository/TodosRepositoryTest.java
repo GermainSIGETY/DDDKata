@@ -33,9 +33,9 @@ public class TodosRepositoryTest {
             2, 15, 47, 00);
     private static final LocalDateTime DUE_DATE = LocalDateTime.of(2018, Month.JULY,
             2, 16, 47, 00);
+    public static final String ASSIGNEE = "germs@germs.com";
     public static final String DESCRIPTION = "le pauvre";
     public static final String TITLE1 = "Finir le tricot";
-    public static final String ASSIGNEE = "germs@germs.com";
     public static final String DESCRIPTION1 = "devant Julien Lepers";
 
 
