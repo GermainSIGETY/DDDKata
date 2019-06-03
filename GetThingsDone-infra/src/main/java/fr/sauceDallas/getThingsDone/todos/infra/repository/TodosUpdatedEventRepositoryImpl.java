@@ -1,9 +1,9 @@
 package fr.sauceDallas.getThingsDone.todos.infra.repository;
 
-import fr.sauceDallas.getThingsDone.todos.domain.events.TodoUpdatedEvent;
+import fr.sauceDallas.getThingsDone.common.events.TodoUpdatedEvent;
+import fr.sauceDallas.getThingsDone.common.infrastructure.TodosUpdatedEventRepository;
 import fr.sauceDallas.getThingsDone.todos.infra.hibernate.TodoUpdatedEventHibernate;
 import fr.sauceDallas.getThingsDone.todos.infra.hibernate.TodoUpdatedEventHibernateRepository;
-import fr.sauceDallas.getThingsDone.todos.infrastructure.TodosUpdatedEventRepository;
 
 import java.util.Optional;
 

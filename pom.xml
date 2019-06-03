@@ -25,6 +25,8 @@
         <module>GetThingsDone-app</module>
         <module>GetThingsDone-todo-domain</module>
         <module>GetThingsDone-infra</module>
+        <module>GetThingsDone-alerts-domain</module>
+        <module>GetThingsDone-domain-common</module>
     </modules>
 
     <dependencyManagement>

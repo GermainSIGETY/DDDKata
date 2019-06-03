@@ -1,6 +1,6 @@
 package fr.sauceDallas.getThingsDone.todos.domain;
 
-import fr.sauceDallas.getThingsDone.todos.domain.events.TodoUpdatedEvent;
+import fr.sauceDallas.getThingsDone.common.events.TodoUpdatedEvent;
 import fr.sauceDallas.getThingsDone.todos.presentation.ReadTodoResponse;
 import fr.sauceDallas.getThingsDone.todos.presentation.TodoUpdateRequest;
 

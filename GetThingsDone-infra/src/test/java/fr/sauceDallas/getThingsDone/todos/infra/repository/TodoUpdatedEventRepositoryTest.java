@@ -1,8 +1,8 @@
 package fr.sauceDallas.getThingsDone.todos.infra.repository;
 
-import fr.sauceDallas.getThingsDone.todos.domain.events.TodoUpdatedEvent;
+import fr.sauceDallas.getThingsDone.common.events.TodoUpdatedEvent;
+import fr.sauceDallas.getThingsDone.common.infrastructure.TodosUpdatedEventRepository;
 import fr.sauceDallas.getThingsDone.todos.infra.InfraConfiguration;
-import fr.sauceDallas.getThingsDone.todos.infrastructure.TodosUpdatedEventRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

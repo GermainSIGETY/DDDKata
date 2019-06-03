@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>fr.sauceDallas</groupId>
-    <artifactId>GetThingsDone-todo-domain</artifactId>
+    <artifactId>GetThingsDone-alerts-domain</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
 
@@ -42,5 +42,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 
 </project>

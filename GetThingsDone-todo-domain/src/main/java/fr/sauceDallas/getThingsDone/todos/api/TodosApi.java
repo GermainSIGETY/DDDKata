@@ -1,10 +1,10 @@
 package fr.sauceDallas.getThingsDone.todos.api;
 
+import fr.sauceDallas.getThingsDone.common.events.TodoUpdatedEvent;
+import fr.sauceDallas.getThingsDone.common.infrastructure.TodosUpdatedEventRepository;
 import fr.sauceDallas.getThingsDone.todos.domain.Todo;
-import fr.sauceDallas.getThingsDone.todos.domain.events.TodoUpdatedEvent;
 import fr.sauceDallas.getThingsDone.todos.domain.validators.ValidationError;
 import fr.sauceDallas.getThingsDone.todos.infrastructure.TodosRepository;
-import fr.sauceDallas.getThingsDone.todos.infrastructure.TodosUpdatedEventRepository;
 import fr.sauceDallas.getThingsDone.todos.presentation.*;
 
 import javax.transaction.Transactional;
