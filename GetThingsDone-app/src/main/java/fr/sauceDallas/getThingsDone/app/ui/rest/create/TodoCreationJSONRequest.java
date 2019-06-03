@@ -8,13 +8,17 @@ public class TodoCreationJSONRequest {
 
     public final String description;
 
+    public final String assignee;
+
     public final Long dueDateTimeStamp;
 
     public TodoCreationJSONRequest(@JsonProperty("title")String title,
                                    @JsonProperty("description")String description,
+                                   @JsonProperty("assignee")String assignee,
                                    @JsonProperty("dueDate")Long dueDate) {
         this.title = title;
         this.description=description;
+        this.assignee=assignee;
         this.dueDateTimeStamp = dueDate;
     }
 }

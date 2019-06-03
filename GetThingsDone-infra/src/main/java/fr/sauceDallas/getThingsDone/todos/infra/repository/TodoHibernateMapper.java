@@ -10,6 +10,7 @@ public class TodoHibernateMapper {
         return new Todo(todoHibernate.id,
                 todoHibernate.title,
                 todoHibernate.description,
+                todoHibernate.assignee,
                 todoHibernate.creationDateTime,
                 todoHibernate.dueDateTime);
     }
@@ -24,6 +25,7 @@ public class TodoHibernateMapper {
         todoHibernate.id = todo.getId();
         todoHibernate.title = todo.getTitle();
         todoHibernate.description = todo.getDescription();
+        todoHibernate.assignee = todo.getAssignee();
         todoHibernate.creationDateTime = todo.getCreationDatTime();
         todoHibernate.dueDateTime = todo.getDueDateTime();
     }

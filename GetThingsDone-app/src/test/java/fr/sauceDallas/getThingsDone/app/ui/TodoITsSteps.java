@@ -1,6 +1,5 @@
 package fr.sauceDallas.getThingsDone.app.ui;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -21,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
         locations = "classpath:application-IT.properties")
 public class TodoITsSteps {
 
+    private static String ASSIGNEE = "toto@toto.com";
+
     private TestRestTemplate restTemplate;
 
     private TodoWorld todoWorld;
@@ -36,6 +37,7 @@ public class TodoITsSteps {
         JSONObject request = new JSONObject();
         request.put("title", title);
         request.put("description", description);
+        request.put("assignee",ASSIGNEE);
         request.put("dueDate", 12334);
 
         HttpHeaders headers = new HttpHeaders();
@@ -74,7 +76,6 @@ public class TodoITsSteps {
     public void titleIsAndDescriptionIs(String title, String description) {
         assertThat(todoWorld.readTitle).isEqualTo(title);
         assertThat(todoWorld.readDescription).isEqualTo(description);
-
     }
 
     @When("^User Change description of previously created Todo with Title \"([^\"]*)\" and description to \"([^\"]*)\"$")
@@ -83,6 +84,7 @@ public class TodoITsSteps {
         JSONObject request = new JSONObject();
         request.put("title", title);
         request.put("description", description);
+        request.put("assignee",ASSIGNEE);
         request.put("dueDate", 12334);
 
         HttpHeaders headers = new HttpHeaders();

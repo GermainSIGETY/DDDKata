@@ -15,21 +15,25 @@ public class Todo {
 
     private String description;
 
+    private String assignee;
+
     private LocalDateTime creationDatTime;
 
     private LocalDateTime dueDateTime;
 
-    public Todo(String title, String description, Long dueDateTimeStamp) {
+    public Todo(String title, String description, String assignee, Long dueDateTimeStamp) {
         this.title = title;
         this.description = description;
+        this.assignee = assignee;
         this.creationDatTime = LocalDateTime.now();
         this.dueDateTime = timeStampToLocalDate(dueDateTimeStamp);
     }
 
-    public Todo(Long id, String title, String description, LocalDateTime creationDatTime, LocalDateTime dueDateTime) {
+    public Todo(Long id, String title, String description, String assignee, LocalDateTime creationDatTime, LocalDateTime dueDateTime) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.assignee = assignee;
         this.creationDatTime = creationDatTime;
         this.dueDateTime = dueDateTime;
     }
@@ -46,6 +50,10 @@ public class Todo {
         return description;
     }
 
+    public String getAssignee() {
+        return assignee;
+    }
+
     public LocalDateTime getCreationDatTime() {
         return creationDatTime;
     }
@@ -59,8 +67,9 @@ public class Todo {
     }
 
     public Todo updateFromUpdateRequest(TodoUpdateRequest request) {
-        this.title=request.title;
-        this.description= request.description;
+        this.title = request.title;
+        this.description = request.description;
+        this.assignee = request.assignee;
         this.dueDateTime = timeStampToLocalDate(request.dueDateTimeStamp);
         return this;
     }

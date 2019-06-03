@@ -24,7 +24,7 @@ public class TodosApi {
 
     @Transactional
     public Long createTodo(TodoCreationRequest request) {
-        Todo todo = new Todo(request.title, request.description, request.dueDateTimeStamp);
+        Todo todo = new Todo(request.title, request.description, request.assignee, request.dueDateTimeStamp);
         return todosRepository.create(todo);
     }
 

@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -31,11 +30,12 @@ public class TodosRepositoryTest {
     public static final String TITLE = "sortir le chien";
 
     private static final LocalDateTime CREATION_DATE = LocalDateTime.of(2018, Month.JULY,
-            2,15,47,00);
+            2, 15, 47, 00);
     private static final LocalDateTime DUE_DATE = LocalDateTime.of(2018, Month.JULY,
-            2,16,47,00);
+            2, 16, 47, 00);
     public static final String DESCRIPTION = "le pauvre";
     public static final String TITLE1 = "Finir le tricot";
+    public static final String ASSIGNEE = "germs@germs.com";
     public static final String DESCRIPTION1 = "devant Julien Lepers";
 
 
@@ -73,7 +73,7 @@ public class TodosRepositoryTest {
 
     @Test
     public void testCreate() {
-        Todo todo = new Todo(TITLE1, DESCRIPTION1, Timestamp.valueOf(DUE_DATE).getTime());
+        Todo todo = new Todo(TITLE1, DESCRIPTION1, ASSIGNEE, Timestamp.valueOf(DUE_DATE).getTime());
 
         Long createdId = todosRepository.create(todo);
 
@@ -85,6 +85,7 @@ public class TodosRepositoryTest {
         assertThat(read.get().getId()).isEqualTo(createdId);
         assertThat(read.get().getTitle()).isEqualTo(TITLE1);
         assertThat(read.get().getDescription()).isEqualTo(DESCRIPTION1);
+        assertThat(read.get().getAssignee()).isEqualTo(ASSIGNEE);
         assertThat(read.get().getCreationDatTime()).isNotNull();
         assertThat(read.get().getDueDateTime()).isEqualTo(DUE_DATE);
     }
@@ -93,7 +94,7 @@ public class TodosRepositoryTest {
     public void testUpdate() {
 
         Todo todo = todosRepository.readTodo(1L).get();
-        todo.updateFromUpdateRequest(new TodoUpdateRequest(1L, TITLE1, DESCRIPTION1,Timestamp.valueOf(DUE_DATE).getTime()));
+        todo.updateFromUpdateRequest(new TodoUpdateRequest(1L, TITLE1, DESCRIPTION1, ASSIGNEE, Timestamp.valueOf(DUE_DATE).getTime()));
 
         todosRepository.update(todo);
 
@@ -109,7 +110,7 @@ public class TodosRepositoryTest {
 
     @Test
     public void testDelete() {
-        Todo todo = new Todo(TITLE1, DESCRIPTION1, Timestamp.valueOf(DUE_DATE).getTime());
+        Todo todo = new Todo(TITLE1, DESCRIPTION1, ASSIGNEE, Timestamp.valueOf(DUE_DATE).getTime());
 
         Long createdId = todosRepository.create(todo);
 

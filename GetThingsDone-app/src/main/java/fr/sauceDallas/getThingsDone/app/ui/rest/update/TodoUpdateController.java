@@ -22,7 +22,7 @@ public class TodoUpdateController {
     @ResponseBody
     public ResponseEntity<Void> updateTodo(@PathVariable(value = "todoId") Long todoId,
                                            @RequestBody TodoUpdateJSONRequest request) throws TodoDomainException {
-        todosApi.updateTodo(TodoUpdateRequest.factory(todoId, request.title, request.description, request.dueDateTimeStamp));
+        todosApi.updateTodo(TodoUpdateRequest.factory(todoId, request.title, request.description, request.assignee, request.dueDateTimeStamp));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

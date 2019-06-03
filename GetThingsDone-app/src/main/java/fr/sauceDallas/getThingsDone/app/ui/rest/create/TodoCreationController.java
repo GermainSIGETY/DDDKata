@@ -23,7 +23,7 @@ public class TodoCreationController {
     @ResponseBody
     public TodoCreationJSONResponse CreateTodo(@RequestBody TodoCreationJSONRequest request) throws TodoDomainException {
         Long id = todosApi.createTodo(TodoCreationRequest.
-                createTodoCreationRequest(request.title, request.description, request.dueDateTimeStamp));
+                createTodoCreationRequest(request.title, request.description, request.assignee, request.dueDateTimeStamp));
         return new TodoCreationJSONResponse(id);
     }
 }
